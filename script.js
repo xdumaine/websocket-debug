@@ -95,13 +95,14 @@
       var filters = options.filters || options.filter || {};
       var limit = options.limit || null;
       var raw = options.raw || false;
+      var transform = options.transform;
       var msgs = messages;
 
       if (limit) {
         msgs = msgs.slice(-1*limit);
       }
 
-      return msgs.map((msg) => {
+      var results = msgs.map((msg) => {
         if (!keep(msg, filters)) {
           return;
         }
@@ -110,7 +111,14 @@
         }
         return columns.map((c) => msg[c]);
       })
-        .filter((row) => !!row) // remove filtered rows
+        .filter((row) => !!row); // remove filtered rows
+      if (typeof transform !== 'function') {
+        return results;
+      }
+      return results.map((row) => {
+        row.msg = transform(row.msg);
+        return row;
+      });    
     },
 
     pretty(options) {
