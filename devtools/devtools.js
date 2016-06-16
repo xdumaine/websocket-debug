@@ -8,5 +8,5 @@
     console.log(arguments);
   };
   chrome.devtools.panels.create('Websocket Debug',
-    'websocket.png', 'websocket-console.html', createPanel);
+    'devtools/websocket.png', 'devtools/websocket-console.html', createPanel);
 })();

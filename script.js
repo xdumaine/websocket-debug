@@ -185,6 +185,12 @@
           log = Object.assign({}, log, {
             msg: transform(log.msg)
           });
+        } else {
+          // TODO: don't commit this
+          transform = (txt) => { txt = txt.replace(/\\"/g, '"'); return txt.substring(txt.indexOf('"stanza","<')+10, txt.length - 2) };
+          log = Object.assign({}, log, {
+            msg: transform(log.msg)
+          });
         }
 
         if (raw) {
